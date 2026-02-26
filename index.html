@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matrika Now — Ancient Wisdom, Present Healing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary:#1a2e24; --accent:#c9a462; --bg:#f7f3ec; --text:#2c2a25; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { overflow-x: hidden; width: 100%; max-width: 100vw; font-family: 'Jost', sans-serif; color: var(--text); background: var(--bg); }
+    h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 6vw, 52px); font-weight: 600; line-height: 1.15; margin-bottom: 16px; }
+    p { font-size: 14px; line-height: 1.75; }
+    img { max-width: 100%; display: block; }
+    a[href^="tel"] { color: inherit; text-decoration: none; }
+    .section-title-em { font-style: italic; color: var(--accent); }
+    .section-label { display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .section-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--accent); flex-shrink: 0; }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* ===== NAV ===== */
+    nav { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; flex-wrap:wrap; gap:12px; position:relative; z-index:10; border-bottom:1px solid rgba(201,164,98,0.2); }
+    .nav-brand { display:flex; flex-direction:column; }
+    .nav-brand-sub { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); opacity:0.8; }
+    .nav-brand-name { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:white; }
+    .nav-links { display:none; gap:28px; list-style:none; }
+    .nav-links a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:12px; letter-spacing:1px; text-transform:uppercase; transition:color 0.3s; }
+    .nav-links a:hover { color:var(--accent); }
+    .nav-cta { background:var(--accent); color:var(--primary); padding:10px 20px; border-radius:2px; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; text-decoration:none; transition:background 0.3s,transform 0.2s; }
+    .nav-cta:hover { background:#d4b072; transform:translateY(-1px); }
+    @media (min-width:768px) { nav { padding:24px 60px; } .nav-links { display:flex; } }
+
+    /* ===== HERO ===== */
+    .hero { min-height:100vh; background:linear-gradient(135deg,#0f1d15 0%,var(--primary) 55%,#0d1a10 100%); display:flex; flex-direction:column; position:relative; overflow:hidden; }
+    .hero-grid { position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:60px 60px; }
+    .hero-glow { position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 70% 55% at 65% 40%,rgba(201,164,98,0.09) 0%,transparent 65%); }
+    .hero-content { flex:1; display:flex; flex-direction:column; justify-content:center; padding:48px 20px 60px; position:relative; z-index:2; }
+    .hero-eyebrow { font-size:11px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:20px; }
+    .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(40px,9vw,76px); font-weight:600; color:white; line-height:1.05; margin-bottom:10px; }
+    .hero-title em { font-style:italic; color:var(--accent); }
+    .hero-sub { font-family:'Cormorant Garamond',serif; font-size:clamp(18px,4vw,28px); font-weight:400; font-style:italic; color:rgba(255,255,255,0.5); margin-bottom:26px; line-height:1.3; }
+    .hero-desc { font-size:15px; color:rgba(255,255,255,0.62); line-height:1.8; margin-bottom:28px; max-width:540px; }
+    .hero-badges { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:32px; }
+    .badge { padding:6px 14px; border:1px solid rgba(201,164,98,0.35); border-radius:2px; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.6); }
+    .hero-cta { display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .btn-primary { background:var(--accent); color:var(--primary); padding:14px 28px; border-radius:2px; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; text-decoration:none; display:inline-block; transition:background 0.3s,transform 0.2s,box-shadow 0.3s; }
+    .btn-primary:hover { background:#d4b072; transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline { border:1px solid rgba(255,255,255,0.35); color:white; padding:14px 28px; border-radius:2px; font-size:12px; font-weight:400; letter-spacing:1px; text-transform:uppercase; text-decoration:none; transition:border-color 0.3s,color 0.3s; }
+    .btn-outline:hover { border-color:var(--accent); color:var(--accent); }
+    @media (min-width:768px) { .hero-content { padding:80px 60px; } }
+
+    /* ===== TICKER ===== */
+    .ticker { background:var(--accent); padding:12px 0; overflow:hidden; width:100%; }
+    .ticker-inner { display:flex; gap:50px; width:max-content; white-space:nowrap; animation:ticker 32s linear infinite; }
+    .ticker-item { font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--primary); display:flex; align-items:center; gap:14px; }
+    .ticker-item::before { content:"◆"; font-size:7px; }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ===== WHY MATRIKA NOW ===== */
+    .why { background:var(--bg); padding:60px 20px; }
+    .why-intro { font-size:16px; line-height:1.8; color:#5a6040; max-width:680px; margin-bottom:40px; }
+    .why-grid { display:grid; grid-template-columns:1fr; gap:24px; margin-top:16px; }
+    .why-card { background:white; border:1px solid rgba(201,164,98,0.25); border-radius:6px; padding:28px 24px; box-shadow:0 4px 20px rgba(0,0,0,0.05); transition:transform 0.3s,box-shadow 0.3s; }
+    .why-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.1); }
+    .why-card-icon { font-size:28px; margin-bottom:14px; }
+    .why-card-title { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:var(--primary); margin-bottom:10px; }
+    .why-card-desc { font-size:14px; line-height:1.75; color:#5a6040; }
+    @media (min-width:768px) { .why { padding:100px 60px; } .why-grid { grid-template-columns:1fr 1fr 1fr; gap:32px; } }
+
+    /* ===== SERVICES ===== */
+    .services { background:var(--primary); padding:60px 20px; position:relative; overflow:hidden; }
+    .services::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 60% 40%,rgba(201,164,98,0.06) 0%,transparent 70%); pointer-events:none; }
+    .services-intro { font-size:16px; color:rgba(255,255,255,0.6); line-height:1.75; max-width:580px; margin-bottom:36px; }
+    .services-grid { display:grid; grid-template-columns:1fr; gap:2px; background:rgba(201,164,98,0.1); border:1px solid rgba(201,164,98,0.2); border-radius:6px; overflow:hidden; }
+    .service-item { background:rgba(255,255,255,0.03); padding:22px 20px; display:flex; align-items:flex-start; gap:16px; transition:background 0.3s; }
+    .service-item:hover { background:rgba(201,164,98,0.08); }
+    .service-icon { width:42px; height:42px; background:rgba(201,164,98,0.12); border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px; }
+    .service-name { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:white; margin-bottom:5px; }
+    .service-desc { font-size:13px; color:rgba(255,255,255,0.5); line-height:1.65; }
+    @media (min-width:768px) { .services { padding:100px 60px; } .services-grid { grid-template-columns:1fr 1fr; } }
+
+    /* ===== MATRIKA PERSPECTIVE ===== */
+    .perspective { background:#0f1d15; padding:60px 20px; text-align:center; position:relative; overflow:hidden; }
+    .perspective::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; }
+    .perspective-inner { position:relative; z-index:2; max-width:720px; margin:0 auto; }
+    .perspective-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(22px,5vw,38px); font-weight:500; font-style:italic; color:white; line-height:1.35; margin-bottom:32px; }
+    .perspective-quote em { color:var(--accent); font-style:normal; }
+    .perspective-list { list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; }
+    .perspective-list li { display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.6); justify-content:center; }
+    .perspective-list li::before { content:'—'; color:var(--accent); }
+    .perspective-closing { font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; color:rgba(255,255,255,0.45); }
+    @media (min-width:768px) { .perspective { padding:100px 60px; } }
+
+    /* ===== ARCHETYPES ===== */
+    .archetypes { background:var(--bg); padding:60px 20px; }
+    .archetypes-intro { font-size:15px; color:#5a6040; line-height:1.8; max-width:640px; margin-bottom:40px; }
+    .archetypes-grid { display:grid; grid-template-columns:1fr; gap:16px; margin-bottom:36px; }
+    .archetype-card { background:white; border:1px solid rgba(201,164,98,0.22); border-radius:6px; padding:24px 20px; transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s; position:relative; overflow:hidden; }
+    .archetype-card::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--accent); transform:scaleX(0); transition:transform 0.3s; }
+    .archetype-card:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.1); border-color:rgba(201,164,98,0.5); }
+    .archetype-card:hover::after { transform:scaleX(1); }
+    .archetype-emoji { font-size:26px; margin-bottom:10px; }
+    .archetype-name { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:var(--primary); margin-bottom:6px; }
+    .archetype-essence { font-size:13px; color:#5a6040; line-height:1.65; }
+    .archetype-balance { font-size:12px; color:rgba(201,164,98,0.85); margin-top:8px; font-style:italic; }
+    .pull-quote { text-align:center; padding:32px 20px; border-top:1px solid rgba(201,164,98,0.2); border-bottom:1px solid rgba(201,164,98,0.2); margin-bottom:32px; }
+    .pull-quote p { font-family:'Cormorant Garamond',serif; font-size:clamp(18px,4vw,26px); font-style:italic; color:var(--primary); max-width:580px; margin:0 auto; }
+    .archetypes-cta { text-align:center; }
+    @media (min-width:768px) { .archetypes { padding:100px 60px; } .archetypes-grid { grid-template-columns:1fr 1fr 1fr; gap:24px; } }
+
+    /* ===== DOSHAS ===== */
+    .doshas { background:var(--primary); padding:60px 20px; position:relative; overflow:hidden; }
+    .doshas::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 30% 50%,rgba(201,164,98,0.07) 0%,transparent 65%); pointer-events:none; }
+    .doshas-intro { font-size:15px; color:rgba(255,255,255,0.6); line-height:1.8; max-width:640px; margin-bottom:40px; }
+    .doshas-grid { display:grid; grid-template-columns:1fr; gap:20px; margin-bottom:40px; }
+    .dosha-card { background:rgba(255,255,255,0.04); border:1px solid rgba(201,164,98,0.2); border-radius:6px; padding:28px 24px; transition:background 0.3s,border-color 0.3s; }
+    .dosha-card:hover { background:rgba(201,164,98,0.07); border-color:rgba(201,164,98,0.4); }
+    .dosha-name { font-family:'Cormorant Garamond',serif; font-size:34px; font-weight:600; color:var(--accent); margin-bottom:6px; }
+    .dosha-energy { font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:14px; }
+    .dosha-desc { font-size:14px; color:rgba(255,255,255,0.65); line-height:1.75; margin-bottom:12px; }
+    .dosha-traits { font-size:13px; color:var(--accent); font-style:italic; }
+    .doshas-cta { text-align:center; }
+    @media (min-width:768px) { .doshas { padding:100px 60px; } .doshas-grid { grid-template-columns:1fr 1fr 1fr; gap:28px; } }
+
+    /* ===== WAYS TO WORK ===== */
+    .work-ways { background:var(--bg); padding:60px 20px; }
+    .work-ways-grid { display:grid; grid-template-columns:1fr; gap:24px; margin-top:36px; }
+    .work-card { background:white; border:1px solid rgba(201,164,98,0.2); border-radius:6px; padding:32px 28px; box-shadow:0 4px 20px rgba(0,0,0,0.04); transition:transform 0.3s,box-shadow 0.3s; }
+    .work-card:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(0,0,0,0.1); }
+    .work-card-num { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:600; color:rgba(201,164,98,0.22); line-height:1; margin-bottom:10px; }
+    .work-card-title { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--primary); margin-bottom:8px; }
+    .work-card-tagline { font-size:14px; font-style:italic; color:var(--accent); margin-bottom:14px; }
+    .work-card-desc { font-size:14px; line-height:1.75; color:#5a6040; margin-bottom:16px; }
+    .work-card-points { list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+    .work-card-points li { font-size:13px; color:#5a6040; display:flex; align-items:flex-start; gap:8px; }
+    .work-card-points li::before { content:'—'; color:var(--accent); flex-shrink:0; }
+    .work-card-cta { font-size:13px; font-style:italic; color:var(--primary); font-weight:500; }
+    @media (min-width:768px) { .work-ways { padding:100px 60px; } .work-ways-grid { grid-template-columns:1fr 1fr 1fr; gap:32px; } }
+
+    /* ===== ABOUT MALVIKA ===== */
+    .about { background:var(--primary); padding:60px 20px; position:relative; overflow:hidden; }
+    .about::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 60% at 80% 40%,rgba(201,164,98,0.07) 0%,transparent 70%); pointer-events:none; }
+    .about-inner { position:relative; z-index:2; max-width:680px; }
+    .about-name { font-family:'Cormorant Garamond',serif; font-size:clamp(34px,7vw,60px); font-weight:600; color:white; margin-bottom:6px; }
+    .about-role { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:28px; }
+    .about-bio { font-size:15px; line-height:1.9; color:rgba(255,255,255,0.7); margin-bottom:18px; }
+    @media (min-width:768px) { .about { padding:100px 60px; } }
+
+    /* ===== START YOUR JOURNEY ===== */
+    .journey { background:var(--bg); padding:60px 20px; }
+    .journey-inner { max-width:680px; }
+    .journey-intro { font-size:15px; line-height:1.8; color:#5a6040; margin-bottom:24px; }
+    .journey-checklist { list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+    .journey-checklist li { display:flex; align-items:flex-start; gap:10px; font-size:14px; color:var(--text); line-height:1.6; }
+    .journey-checklist li::before { content:'✦'; color:var(--accent); flex-shrink:0; margin-top:2px; font-size:10px; }
+    .journey-closing { font-size:15px; line-height:1.8; color:#5a6040; margin-bottom:32px; }
+    .journey-cta { display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .btn-dark { background:var(--primary); color:white; padding:14px 28px; border-radius:2px; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; text-decoration:none; display:inline-block; transition:background 0.3s,transform 0.2s,box-shadow 0.3s; }
+    .btn-dark:hover { background:#0f1d15; transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.2); }
+    .btn-text { font-size:13px; color:var(--primary); text-decoration:none; border-bottom:1px solid rgba(201,164,98,0.5); padding-bottom:2px; transition:border-color 0.3s,color 0.3s; }
+    .btn-text:hover { border-color:var(--accent); color:#5a3e1c; }
+    @media (min-width:768px) { .journey { padding:100px 60px; } }
+
+    /* ===== FOOTER ===== */
+    footer { background:#0a1208; border-top:3px solid var(--accent); padding:48px 20px; display:flex; flex-direction:column; gap:36px; }
+    .footer-name { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:white; margin-bottom:6px; }
+    .footer-tagline { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+    .footer-desc { font-size:13px; color:rgba(255,255,255,0.35); line-height:1.8; }
+    .footer-col-title { font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+    .footer-links { list-style:none; }
+    .footer-links li { margin-bottom:10px; }
+    .footer-links a { color:rgba(255,255,255,0.45); text-decoration:none; font-size:14px; transition:color 0.2s; }
+    .footer-links a:hover { color:var(--accent); }
+    .footer-matrikas { display:flex; flex-direction:column; gap:8px; }
+    .footer-matrika-item { font-size:13px; color:rgba(255,255,255,0.35); display:flex; align-items:center; gap:8px; }
+    .footer-matrika-item::before { content:'·'; color:var(--accent); }
+    .footer-bottom { background:#060e04; padding:18px 20px; display:flex; flex-direction:column; gap:6px; font-size:12px; color:rgba(255,255,255,0.3); }
+    @media (min-width:768px) {
+      footer { display:grid; grid-template-columns:1.5fr 1fr 1fr; padding:60px; gap:60px; }
+      .footer-bottom { flex-direction:row; justify-content:space-between; align-items:center; padding:20px 60px; }
+    }
+
+    /* ===== HERO BOTANICAL + CENTERED (DESKTOP) ===== */
+    .hero-botanic { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:1; }
+    .hero-botanic::before { content:'❋'; position:absolute; top:-40px; left:-30px; font-size:320px; color:rgba(201,164,98,0.04); transform:rotate(-15deg); line-height:1; }
+    .hero-botanic::after { content:'❋'; position:absolute; bottom:-50px; right:-40px; font-size:260px; color:rgba(201,164,98,0.04); transform:rotate(25deg); line-height:1; }
+    @media (min-width:768px) {
+      .hero-content { align-items:center; text-align:center; }
+      .hero-badges { justify-content:center; }
+      .hero-cta { justify-content:center; }
+      .hero-desc { margin-left:auto; margin-right:auto; }
+    }
+
+    /* ===== STATS ===== */
+    .stats { background:var(--bg); padding:60px 20px; border-top:1px solid rgba(201,164,98,0.2); border-bottom:1px solid rgba(201,164,98,0.2); }
+    .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; max-width:760px; margin:0 auto; text-align:center; }
+    .stat-item { padding:28px 16px; position:relative; }
+    .stat-item:nth-child(odd)::after { content:''; position:absolute; right:0; top:20%; height:60%; width:1px; background:rgba(201,164,98,0.25); }
+    .stat-num { font-family:'Cormorant Garamond',serif; font-size:clamp(44px,8vw,68px); font-weight:600; color:var(--accent); line-height:1; margin-bottom:10px; }
+    .stat-label { font-size:11px; font-weight:500; letter-spacing:2.5px; text-transform:uppercase; color:var(--text); opacity:0.55; }
+    @media (min-width:768px) { .stats { padding:80px 60px; } .stats-grid { grid-template-columns:1fr 1fr 1fr 1fr; } .stat-item::after { content:''; position:absolute; right:0; top:20%; height:60%; width:1px; background:rgba(201,164,98,0.25); } .stat-item:last-child::after { display:none; } }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials { background:var(--primary); padding:60px 20px; position:relative; overflow:hidden; }
+    .testimonials::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(201,164,98,0.05) 0%,transparent 70%); pointer-events:none; }
+    .testimonials-inner { position:relative; z-index:2; }
+    .testimonials-grid { display:grid; grid-template-columns:1fr; gap:20px; margin-top:40px; }
+    .testi-card { background:rgba(255,255,255,0.04); border:1px solid rgba(201,164,98,0.18); border-radius:6px; padding:28px 24px; transition:border-color 0.3s; }
+    .testi-card:hover { border-color:rgba(201,164,98,0.4); }
+    .testi-mark { font-family:'Cormorant Garamond',serif; font-size:56px; color:var(--accent); line-height:0.8; margin-bottom:16px; display:block; opacity:0.65; }
+    .testi-quote { font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; color:rgba(255,255,255,0.82); line-height:1.7; margin-bottom:22px; }
+    .testi-author { font-size:13px; font-weight:500; color:var(--accent); margin-bottom:2px; }
+    .testi-loc { font-size:12px; color:rgba(255,255,255,0.35); font-style:italic; }
+    @media (min-width:768px) { .testimonials { padding:100px 60px; } .testimonials-grid { grid-template-columns:1fr 1fr 1fr; gap:28px; } }
+
+    /* ===== STEPS (inside Journey) ===== */
+    .steps-row { display:grid; grid-template-columns:1fr; gap:16px; margin-bottom:48px; }
+    .step { display:flex; flex-direction:column; gap:6px; padding:22px 20px; background:white; border:1px solid rgba(201,164,98,0.2); border-radius:6px; box-shadow:0 4px 16px rgba(0,0,0,0.04); }
+    .step-num { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:600; color:rgba(201,164,98,0.35); line-height:1; }
+    .step-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:var(--primary); }
+    .step-desc { font-size:13px; color:#5a6040; line-height:1.6; }
+    @media (min-width:768px) {
+      .steps-row { grid-template-columns:1fr 1fr 1fr 1fr; gap:0; }
+      .step { border-radius:0; border-right:none; }
+      .step:first-child { border-radius:6px 0 0 6px; }
+      .step:last-child { border-right:1px solid rgba(201,164,98,0.2); border-radius:0 6px 6px 0; }
+    }
+
+    /* ===== NEWSLETTER ===== */
+    .newsletter { background:var(--primary); padding:60px 20px; text-align:center; position:relative; overflow:hidden; }
+    .newsletter::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 50% 60%,rgba(201,164,98,0.07) 0%,transparent 65%); pointer-events:none; }
+    .newsletter-inner { position:relative; z-index:2; max-width:560px; margin:0 auto; }
+    .newsletter-form { display:flex; gap:0; flex-wrap:nowrap; margin:28px auto 12px; max-width:480px; }
+    .newsletter-input { flex:1; min-width:0; padding:14px 18px; background:rgba(255,255,255,0.07); border:1px solid rgba(201,164,98,0.3); border-right:none; border-radius:2px 0 0 2px; font-family:'Jost',sans-serif; font-size:14px; color:white; outline:none; }
+    .newsletter-input::placeholder { color:rgba(255,255,255,0.35); }
+    .newsletter-input:focus { border-color:var(--accent); background:rgba(255,255,255,0.1); }
+    .newsletter-btn { padding:14px 22px; background:var(--accent); color:var(--primary); font-family:'Jost',sans-serif; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; border:none; border-radius:0 2px 2px 0; cursor:pointer; transition:background 0.3s; white-space:nowrap; }
+    .newsletter-btn:hover { background:#d4b072; }
+    .newsletter-note { font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:0.5px; }
+    @media (max-width:767px) {
+      .newsletter-form { flex-direction:column; }
+      .newsletter-input { border-right:1px solid rgba(201,164,98,0.3); border-bottom:none; border-radius:2px 2px 0 0; }
+      .newsletter-btn { border-radius:0 0 2px 2px; }
+    }
+    @media (min-width:768px) { .newsletter { padding:100px 60px; } }
+  </style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-botanic"></div>
+  <nav>
+    <div class="nav-brand">
+      <span class="nav-brand-sub">Ancient Wisdom · Present Healing</span>
+      <span class="nav-brand-name">Matrika Now</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#archetypes">Archetypes</a></li>
+      <li><a href="#doshas">Doshas</a></li>
+      <li><a href="#work">Work With Us</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a href="#journey" class="nav-cta">Begin Your Journey</a>
+  </nav>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Matrika Now</div>
+    <h1 class="hero-title">A space to remember<br><em>who you are</em></h1>
+    <p class="hero-sub">and how you are meant to move through life</p>
+    <p class="hero-desc">A living space of awareness, healing, and self-discovery — where healing, consciousness, and leadership are not separate paths, but expressions of the same inner intelligence, unfolding <em>now</em>.</p>
+    <div class="hero-badges">
+      <span class="badge">Healing</span>
+      <span class="badge">Archetypes</span>
+      <span class="badge">Doshas</span>
+      <span class="badge">Self-Discovery</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#archetypes" class="btn-primary">Discover Your Archetype</a>
+      <a href="#doshas" class="btn-outline">Explore Doshas</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">The Nurturer</span>
+    <span class="ticker-item">The Catalyst</span>
+    <span class="ticker-item">The Seeker</span>
+    <span class="ticker-item">The Builder</span>
+    <span class="ticker-item">The Visionary</span>
+    <span class="ticker-item">The Anchor</span>
+    <span class="ticker-item">The Alchemist</span>
+    <span class="ticker-item">The Nurturer</span>
+    <span class="ticker-item">The Catalyst</span>
+    <span class="ticker-item">The Seeker</span>
+    <span class="ticker-item">The Builder</span>
+    <span class="ticker-item">The Visionary</span>
+    <span class="ticker-item">The Anchor</span>
+    <span class="ticker-item">The Alchemist</span>
+  </div>
+</div>
+
+<!-- ===== WHY MATRIKA NOW ===== -->
+<section class="why" id="why">
+  <div class="section-label fade-up">Our Foundation</div>
+  <h2 class="fade-up">Why <em class="section-title-em">Matrika Now?</em></h2>
+  <p class="why-intro fade-up">Healing begins when we pause, listen, and connect with our inner truth. At Matrika Now, we believe in a compassionate path that honours the whole of who you are.</p>
+  <div class="why-grid">
+    <div class="why-card fade-up">
+      <div class="why-card-icon">🌿</div>
+      <div class="why-card-title">The Power of Presence</div>
+      <p class="why-card-desc">The present is where healing unfolds. Not in the past we carry or the future we fear — but here, in this breath, this moment.</p>
+    </div>
+    <div class="why-card fade-up">
+      <div class="why-card-icon">🪔</div>
+      <div class="why-card-title">Ancient Wisdom, Modern Practices</div>
+      <p class="why-card-desc">Integrating time-honoured traditions with contemporary methods — drawing from Ayurveda, the Yogasutras, and archetypal wisdom to illuminate your path.</p>
+    </div>
+    <div class="why-card fade-up">
+      <div class="why-card-icon">🌸</div>
+      <div class="why-card-title">Community of Compassion</div>
+      <p class="why-card-desc">A collective space led by skilled healers dedicated to your growth and well-being. You are not alone in this journey of becoming.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHAT WE OFFER ===== -->
+<section class="services" id="services">
+  <div class="section-label fade-up" style="color:var(--accent)">What We Offer</div>
+  <h2 class="fade-up" style="color:white">Our <em class="section-title-em">Offerings</em></h2>
+  <p class="services-intro fade-up">Whether you are seeking to heal, learn, or connect, we offer pathways to explore the depths of your inner self with compassion, curiosity, and care.</p>
+  <div class="services-grid fade-up">
+    <div class="service-item">
+      <div class="service-icon">💫</div>
+      <div>
+        <div class="service-name">Healing Sessions</div>
+        <div class="service-desc">Personalised one-on-one sessions that align with your unique emotional and spiritual journey.</div>
+      </div>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">📿</div>
+      <div>
+        <div class="service-name">Training Programs</div>
+        <div class="service-desc">Comprehensive modules blending ancient practices with modern approaches to deepen your healing understanding.</div>
+      </div>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">🎙️</div>
+      <div>
+        <div class="service-name">Knowledge Sessions</div>
+        <div class="service-desc">Interactive webinars and workshops featuring expert healers, designed to expand your perspective and tools for self-care.</div>
+      </div>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">🧘</div>
+      <div>
+        <div class="service-name">Guided Meditations</div>
+        <div class="service-desc">Experience profound moments of clarity and peace through curated mindfulness practices.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section class="stats fade-up">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Lives Touched</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Matrika Archetypes</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Ways to Work</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Compassionate Presence</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-inner">
+    <div class="section-label fade-up" style="color:var(--accent)">Voices from the Journey</div>
+    <h2 class="fade-up" style="color:white">Results I have <em class="section-title-em">helped create</em></h2>
+    <div class="testimonials-grid">
+      <div class="testi-card fade-up">
+        <span class="testi-mark">"</span>
+        <p class="testi-quote">This work changed how I understand myself. Malvika holds a mirror without judgment — and what you see in it is actually freeing.</p>
+        <div class="testi-author">Priya R.</div>
+        <div class="testi-loc">Mumbai · Healing Sessions</div>
+      </div>
+      <div class="testi-card fade-up">
+        <span class="testi-mark">"</span>
+        <p class="testi-quote">Malvika holds space unlike anyone I have ever encountered. The archetype work unlocked something I had been circling for years.</p>
+        <div class="testi-author">Ananya S.</div>
+        <div class="testi-loc">Delhi · 1:1 Work</div>
+      </div>
+      <div class="testi-card fade-up">
+        <span class="testi-mark">"</span>
+        <p class="testi-quote">The dosha discovery was a revelation. Understanding my constitution explained so many patterns in my relationships and responses.</p>
+        <div class="testi-author">Sunita K.</div>
+        <div class="testi-loc">Bangalore · Group Journey</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MATRIKA PERSPECTIVE ===== -->
+<section class="perspective" id="perspective">
+  <div class="perspective-inner">
+    <div class="section-label fade-up" style="justify-content:center;color:var(--accent)">The Matrika Perspective</div>
+    <p class="perspective-quote fade-up">When you understand your <em>inner design</em>,<br>life stops feeling random.</p>
+    <ul class="perspective-list fade-up">
+      <li>Recognize your core archetypal patterns</li>
+      <li>Understand your constitutional nature (dosha)</li>
+      <li>Integrate this awareness into daily life, relationships, and leadership</li>
+    </ul>
+    <p class="perspective-closing fade-up">This is not about fixing yourself. It is about remembering your original rhythm.</p>
+  </div>
+</section>
+
+<!-- ===== DISCOVER YOUR ARCHETYPE ===== -->
+<section class="archetypes" id="archetypes">
+  <div class="section-label fade-up">Self-Discovery</div>
+  <h2 class="fade-up">Discover Your <em class="section-title-em">Archetype</em></h2>
+  <p class="archetypes-intro fade-up">Your archetype is not your role. It is the lens through which you experience the world — shaping how you lead, relate, and respond under stress. At Matrika Now, archetypes are used as mirrors, not boxes.</p>
+  <div class="archetypes-grid">
+    <div class="archetype-card fade-up">
+      <div class="archetype-emoji">🌿</div>
+      <div class="archetype-name">The Nurturer</div>
+      <p class="archetype-essence">The one who creates safety, connection, and emotional continuity. You sense what is needed — often before it is spoken.</p>
+      <p class="archetype-balance">Care · Holding · Emotional Attunement</p>
+    </div>
+    <div class="archetype-card fade-up">
+      <div class="archetype-emoji">🔥</div>
+      <div class="archetype-name">The Catalyst</div>
+      <p class="archetype-essence">The one who initiates movement and change. Where things stagnate, you bring heat, clarity, and direction.</p>
+      <p class="archetype-balance">Transformation · Action · Momentum</p>
+    </div>
+    <div class="archetype-card fade-up">
+      <div class="archetype-emoji">🌊</div>
+      <div class="archetype-name">The Seeker</div>
+      <p class="archetype-essence">The one who searches for meaning beneath the surface. Questions matter more to you than quick answers. You are not lost — you are listening.</p>
+      <p class="archetype-balance">Meaning · Inquiry · Inner Truth</p>
+    </div>
+    <div class="archetype-card fade-up">
+      <div class="archetype-emoji">🌱</div>
+      <div class="archetype-name">The Builder</div>
+      <p class="archetype-essence">The one who creates structure, continuity, and long-term stability. Others rely on you because you don't disappear when things get difficult.</p>
+      <p class="archetype-balance">Stability · Structure · Continuity</p>
+    </div>
+    <div class="archetype-card fade-up">
+      <div class="archetype-emoji">✨</div>
+      <div class="archetype-name">The Visionary</div>
+      <p class="archetype-essence">The one who senses possibility and future pathways. Ideas and new directions arrive naturally to you. You are here to expand what others believe is possible.</p>
+      <p class="archetype-balance">Imagination · Possibility · Future-Sensing</p>
+    </div>
+    <div class="archetype-card fade-up">
+      <div class="archetype-emoji">🪨</div>
+      <div class="archetype-name">The Anchor</div>
+      <p class="archetype-essence">The one who brings grounding, presence, and nervous-system safety. People feel calmer simply by being near you.</p>
+      <p class="archetype-balance">Grounding · Presence · Nervous-System Safety</p>
+    </div>
+    <div class="archetype-card fade-up" style="grid-column:1/-1;max-width:360px;margin:0 auto;width:100%">
+      <div class="archetype-emoji">🜂</div>
+      <div class="archetype-name">The Alchemist</div>
+      <p class="archetype-essence">The one who integrates, transforms, and synthesizes experience. You are comfortable in complexity and shadow. You don't just change — you transmute.</p>
+      <p class="archetype-balance">Integration · Synthesis · Deep Transformation</p>
+    </div>
+  </div>
+  <div class="pull-quote fade-up">
+    <p>"This space won't flatter you — it will understand you."</p>
+  </div>
+  <div class="archetypes-cta fade-up">
+    <a href="#journey" class="btn-primary">✨ Take the Archetype Discovery</a>
+  </div>
+</section>
+
+<!-- ===== UNDERSTAND YOUR DOSHA ===== -->
+<section class="doshas" id="doshas">
+  <div class="section-label fade-up" style="color:var(--accent)">Ayurvedic Wisdom</div>
+  <h2 class="fade-up" style="color:white">Understand Your <em class="section-title-em">Dosha</em></h2>
+  <p class="doshas-intro fade-up">From the ancient science of Ayurveda comes the understanding that each of us is born with a unique energetic constitution. The three doshas govern how your body functions, how your mind processes experience, and how you respond to the world.</p>
+  <div class="doshas-grid">
+    <div class="dosha-card fade-up">
+      <div class="dosha-name">Vata</div>
+      <div class="dosha-energy">The Energy of Movement &amp; Creativity</div>
+      <p class="dosha-desc">Vata governs motion, breath, and the nervous system. When in balance, it brings creativity, enthusiasm, and inspiration. When out of balance, anxiety and scattered energy arise.</p>
+      <p class="dosha-traits">Light · Quick · Imaginative · Sensitive</p>
+    </div>
+    <div class="dosha-card fade-up">
+      <div class="dosha-name">Pitta</div>
+      <div class="dosha-energy">The Energy of Transformation &amp; Leadership</div>
+      <p class="dosha-desc">Pitta governs digestion, metabolism, and transformation. When in balance, it brings sharp intellect, courage, and decisive leadership. When out of balance, intensity and burnout emerge.</p>
+      <p class="dosha-traits">Focused · Driven · Sharp · Decisive</p>
+    </div>
+    <div class="dosha-card fade-up">
+      <div class="dosha-name">Kapha</div>
+      <div class="dosha-energy">The Energy of Stability &amp; Nourishment</div>
+      <p class="dosha-desc">Kapha governs structure, growth, and immunity. When in balance, it brings steadiness, compassion, and deep nourishment. When out of balance, heaviness and resistance to change set in.</p>
+      <p class="dosha-traits">Grounded · Steady · Compassionate · Resilient</p>
+    </div>
+  </div>
+  <div class="doshas-cta fade-up">
+    <a href="#journey" class="btn-primary">🌿 Take the Dosha Quiz</a>
+  </div>
+</section>
+
+<!-- ===== WAYS TO WORK ===== -->
+<section class="work-ways" id="work">
+  <div class="section-label fade-up">How We Work Together</div>
+  <h2 class="fade-up">Ways to Work <em class="section-title-em">With Matrika Now</em></h2>
+  <div class="work-ways-grid">
+    <div class="work-card fade-up">
+      <div class="work-card-num">01</div>
+      <div class="work-card-title">1:1 Work</div>
+      <p class="work-card-tagline">For moments that require depth, discretion, and clarity.</p>
+      <p class="work-card-desc">These sessions are designed for individuals navigating inner transitions that don't yet have language.</p>
+      <ul class="work-card-points">
+        <li>Inner transitions that don't have language yet</li>
+        <li>Leadership or responsibility that feels heavy or isolating</li>
+        <li>Healing that must integrate with daily life, not interrupt it</li>
+      </ul>
+      <p class="work-card-cta">→ For those who value nuance, confidentiality, and real movement.</p>
+    </div>
+    <div class="work-card fade-up">
+      <div class="work-card-num">02</div>
+      <div class="work-card-title">Group Spaces &amp; Journeys</div>
+      <p class="work-card-tagline">Because coherence deepens in the presence of others.</p>
+      <p class="work-card-desc">Group work at Matrika Now is carefully held. You are not processed. You are not exposed. You are met.</p>
+      <ul class="work-card-points">
+        <li>Recognize yourself through others</li>
+        <li>Soften without losing strength</li>
+        <li>Practice presence in relationship</li>
+      </ul>
+      <p class="work-card-cta">→ For those who value shared depth without loss of individuality.</p>
+    </div>
+    <div class="work-card fade-up">
+      <div class="work-card-num">03</div>
+      <div class="work-card-title">Courses &amp; Learning Containers</div>
+      <p class="work-card-tagline">Clarity you can return to. Practices you can live.</p>
+      <p class="work-card-desc">Thoughtfully structured learning spaces that blend conceptual understanding, reflective inquiry, and embodied practice.</p>
+      <ul class="work-card-points">
+        <li>Conceptual understanding and reflective inquiry</li>
+        <li>Embodied practice — not information overload</li>
+        <li>Sustained integration at your own pace</li>
+      </ul>
+      <p class="work-card-cta">→ For those who want structure, self-paced depth, and lasting reference points.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT MALVIKA ===== -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="section-label fade-up" style="color:var(--accent)">About</div>
+    <h2 class="about-name fade-up">Malvika</h2>
+    <div class="about-role fade-up">Compassionate Guide &amp; Healer</div>
+    <p class="about-bio fade-up">As a compassionate guide and healer, I am here to walk beside you on your journey toward self-discovery and wholeness. My practice is rooted in the belief that healing begins with acceptance and kindness — embracing every aspect of our being, including the wounds we carry.</p>
+    <p class="about-bio fade-up">Through inner exploration, intuitive insights, and a nurturing presence, I support you in finding clarity and connection with your authentic self. Whether you are seeking to heal, learn, or simply find your way back to yourself — this space is for you.</p>
+  </div>
+</section>
+
+<!-- ===== START YOUR JOURNEY ===== -->
+<section class="journey" id="journey">
+  <div class="section-label fade-up">Begin Today</div>
+  <h2 class="fade-up">Start Your <em class="section-title-em">Journey Now</em></h2>
+  <div class="section-label fade-up" style="margin-bottom:8px">Simple Steps to Begin</div>
+  <div class="steps-row fade-up">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Make a Decision</div>
+      <div class="step-desc">Choose to begin. The first step is always the most powerful.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Book a Session</div>
+      <div class="step-desc">Schedule your first conversation with Malvika.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Show Commitment</div>
+      <div class="step-desc">Show up for yourself — with curiosity, not pressure.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Transformation</div>
+      <div class="step-desc">Step into your original rhythm and remember who you are.</div>
+    </div>
+  </div>
+  <div class="journey-inner">
+    <p class="journey-intro fade-up">The time to heal is now. Life can often feel overwhelming — whether it's emotional wounds, unprocessed grief, stress, or a sense of being stuck in patterns that no longer serve you. Matrika Now is here to help you navigate these challenges with compassion and care.</p>
+    <p class="journey-intro fade-up">If you are searching for:</p>
+    <ul class="journey-checklist fade-up">
+      <li>A confidante who listens without judgment</li>
+      <li>A guide to help you explore the depths of your emotions and experiences</li>
+      <li>Tools to break free from limiting beliefs</li>
+      <li>A friend who walks beside you on the path of healing and transformation</li>
+    </ul>
+    <p class="journey-closing fade-up">Then Matrika Now is the space for you. Together, we will embrace your journey, honouring every step with a compassionate presence and understanding. Take that first step today — toward healing, empowerment, and the life you deserve.</p>
+    <div class="journey-cta fade-up">
+      <a href="#" class="btn-dark">Sign Up &amp; Begin</a>
+      <a href="#why" class="btn-text">Learn More ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEWSLETTER ===== -->
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <div class="section-label fade-up" style="justify-content:center;color:var(--accent)">Stay Connected</div>
+    <h2 class="fade-up" style="color:white">Receive wisdom <em class="section-title-em">directly into your inbox</em></h2>
+    <p class="fade-up" style="color:rgba(255,255,255,0.55);font-size:15px;line-height:1.75;margin-bottom:0">Reflections, practices, and invitations — curated by Malvika. No spam. Unsubscribe anytime.</p>
+    <form class="newsletter-form fade-up" onsubmit="return false">
+      <input class="newsletter-input" type="email" placeholder="Your email address" aria-label="Email address" />
+      <button class="newsletter-btn" type="submit">Subscribe</button>
+    </form>
+    <p class="newsletter-note fade-up">Join 500+ souls already on the journey ✦</p>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div>
+    <div class="footer-name">Matrika Now</div>
+    <div class="footer-tagline">Ancient Wisdom · Present Healing</div>
+    <p class="footer-desc">A living space of awareness, healing, and self-discovery — drawing from the Seven Matrikas and the timeless teachings of Ayurveda and the Patanjali Yogasutras.</p>
+  </div>
+  <div>
+    <div class="footer-col-title">Navigate</div>
+    <ul class="footer-links">
+      <li><a href="#why">Why Matrika Now</a></li>
+      <li><a href="#archetypes">Discover Archetypes</a></li>
+      <li><a href="#doshas">Understand Doshas</a></li>
+      <li><a href="#work">Work With Us</a></li>
+      <li><a href="#about">About Malvika</a></li>
+      <li><a href="#journey">Begin Your Journey</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">The Seven Matrikas</div>
+    <div class="footer-matrikas">
+      <div class="footer-matrika-item">The Nurturer</div>
+      <div class="footer-matrika-item">The Catalyst</div>
+      <div class="footer-matrika-item">The Seeker</div>
+      <div class="footer-matrika-item">The Builder</div>
+      <div class="footer-matrika-item">The Visionary</div>
+      <div class="footer-matrika-item">The Anchor</div>
+      <div class="footer-matrika-item">The Alchemist</div>
+    </div>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 Matrika Now. All rights reserved.</span>
+  <span>A space to remember who you are</span>
+</div>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
